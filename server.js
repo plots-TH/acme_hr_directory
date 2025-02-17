@@ -99,6 +99,11 @@ const init = async () => {
     await client.query(SQL);
     console.log("Seeded!");
 
+    app.use((err, req, res, next) => {
+      console.error(err.stack);
+      res.status(500).json({ error: err.message || "Internal Server Error" });
+    });
+
     app.listen(PORT, () => {
       console.log(`server alive on PORT ${PORT}`);
     });
